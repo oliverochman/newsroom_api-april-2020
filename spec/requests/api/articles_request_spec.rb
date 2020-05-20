@@ -1,5 +1,7 @@
-RSpec.describe 'API can serve a list of articles' do
-  let(:article) { 3.times {create(:article) } }
+require 'rails_helper'
+
+RSpec.describe "Api::Articles", type: :request do
+  let!(:article) { 3.times {create(:article) } }
 
   describe 'GET /api/articles' do
     before do
