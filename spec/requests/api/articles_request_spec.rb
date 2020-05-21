@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 RSpec.describe 'Api::Articles', type: :request do
   let!(:article) { 3.times { create(:article) } }
 
