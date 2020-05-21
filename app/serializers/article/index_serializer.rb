@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class ArticleSerializer < ActiveModel::Serializer
+class Article::IndexSerializer < ActiveModel::Serializer
   attributes :id, :title
 end
