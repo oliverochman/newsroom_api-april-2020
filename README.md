@@ -50,7 +50,7 @@ with :title and :body params, gives 200 response with body:
   "message": "Article successfully created!"
 }
 ```
-with :title or :body params missing
+with :title or :body params missing, gives 400 response with body:
 ```
 {
   "message": "Title can't be empty."
@@ -62,3 +62,8 @@ or
   "message": "Body can't be empty"
 }
 ```
+for other errors, gives 500 response with body:
+```
+{
+  "message": "Oops! Something went wrong"
+}
