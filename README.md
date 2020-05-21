@@ -41,3 +41,24 @@ get /articles/:id
   "message": "Article with id :id could not be found"
 }
 ```
+
+post /articles
+with :title and :body params, gives 200 response with body:
+```
+{
+  "id": :id,
+  "message": "Article successfully created!"
+}
+```
+with :title or :body params missing, gives 400 response with body:
+```
+{
+  "message": "Title can't be blank"
+}
+
+or
+
+{
+  "message": "Body can't be blank"
+}
+```
