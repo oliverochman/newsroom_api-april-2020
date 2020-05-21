@@ -30,7 +30,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
       end
 
       it 'has a descriptive error message' do
-        expect(response_json['message']).to eq "Title can't be empty"
+        expect(response_json['message']).to eq "Title can't be blank"
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
       end
 
       it 'has a descriptive error message' do
-        expect(response_json['message']).to eq "Body can't be empty"
+        expect(response_json['message']).to eq "Body can't be blank"
       end
     end
   end

@@ -17,12 +17,9 @@ class Api::ArticlesController < ApplicationController
     article = Article.create(article_params)
     if article.persisted?
       render json: { id: article.id, message: 'Article successfully created!' }
-    elsif article_params['title'].nil?
-      render json: { message: "Title can't be empty" }, status: 400
-    elsif article_params['body'].nil?
-      render json: { message: "Body can't be empty" }, status: 400
     else
-      render json: { message: 'Oops! Something went wrong' }, status: 500
+      error = "#{article.errors.first[0].to_s.capitalize} #{article.errors.first[1]}"
+      render json: { message: error }, status: 400
     end
   end
 
