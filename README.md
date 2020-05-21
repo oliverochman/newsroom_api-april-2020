@@ -24,7 +24,7 @@ Response : {articles:[{id:1,title:"title1"},{id:2,title:"title2"}]}
 }
 ```
 
-get /article/:id
+get /articles/:id
 :id exists in db gives a 200 response with body: 
 ```
 {

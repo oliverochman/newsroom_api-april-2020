@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Api::Articles', type: :request do
+RSpec.describe 'Api::Articles :index', type: :request do
   let!(:article) { create(:article) }
   describe 'GET /api/articles/:id' do
     before do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Api::Articles', type: :request do
+RSpec.describe 'Api::Articles :show', type: :request do
   let!(:article) { 3.times { create(:article) } }
 
   describe 'GET /api/articles' do
