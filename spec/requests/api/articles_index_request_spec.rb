@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Api::Articles', type: :request do
+RSpec.describe 'Api::Articles :index', type: :request do
   let!(:article) { 3.times { create(:article) } }
 
   describe 'GET /api/articles' do
@@ -17,7 +17,7 @@ RSpec.describe 'Api::Articles', type: :request do
     end
 
     describe 'response has keys' do
-      it 'has key :title' do
+      it ':title' do
         expect(response_json['articles'][0]).to have_key 'title'
       end
     end

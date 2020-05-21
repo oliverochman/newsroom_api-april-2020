@@ -1,12 +1,12 @@
-# frozen_string_literal: true
-
 RSpec.describe Article, type: :model do
   describe 'Database table' do
     it { is_expected.to have_db_column :title }
+    it { is_expected.to have_db_column :body  }
   end
 
   describe 'Validates' do
     it { is_expected.to validate_presence_of :title }
+    it { is_expected.to validate_presence_of :body  }
   end
 
   describe 'Factory' do
