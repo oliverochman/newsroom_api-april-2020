@@ -2,7 +2,7 @@
 
 class Api::ArticlesController < ApplicationController
   def index
-    @article = Article.all
-    render json: @article
+    article = Article.all
+    render json: article
   end
 end
