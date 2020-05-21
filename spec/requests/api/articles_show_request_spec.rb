@@ -1,28 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Api::Articles :show', type: :request do
-  let!(:article) { 3.times { create(:article) } }
-
-  describe 'GET /api/articles' do
-    before do
-      get '/api/articles'
-    end
-
-    it 'has a 200 response' do
-      expect(response).to have_http_status 200
-    end
-
-    it 'has returns all articles' do
-      expect(response_json['articles'].length).to eq 3
-    end
-
-    describe 'response has keys' do
-      it ':title' do
-        expect(response_json['articles'][0]).to have_key 'title'
-      end
-    end
-  end
-
+  let!(:article) { create(:article) }
+  
   describe 'GET /api/articles/:id' do
     before do
       article = Article.first
@@ -37,7 +17,7 @@ RSpec.describe 'Api::Articles :show', type: :request do
       it ':title' do
         expect(response_json['article']).to have_key 'title'
       end
-      
+
       it ':body' do
         expect(response_json['article']).to have_key 'body'
       end
@@ -46,15 +26,15 @@ RSpec.describe 'Api::Articles :show', type: :request do
 
   describe 'GET /api/articles/:id to non-existing id' do
     before do
-      get "/api/articles/1000002"
+      get '/api/articles/1000002'
     end
 
     it 'has a 404 response' do
       expect(response).to have_http_status 404
     end
-    
+
     it 'responds with error message' do
-      expect(response_json['message']).to eq "Article with id 1000002 could not be found."
+      expect(response_json['message']).to eq 'Article with id 1000002 could not be found.'
     end
   end
 end
