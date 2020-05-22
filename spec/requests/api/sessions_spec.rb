@@ -6,7 +6,7 @@ RSpec.describe 'POST /api/auth/sign_in', type: :request do
   let(:expected_response) do
     {
       'data' => {
-        'id' => user.id, 'uid' => user.email, 'email' => user.email,
+        'id' => user.id, 'uid' => user.uid, 'email'=> user.email,
         'provider' => 'email', 'allow_password_change' => false
       }
     }
@@ -16,7 +16,7 @@ RSpec.describe 'POST /api/auth/sign_in', type: :request do
     before do
       post '/api/auth/sign_in',
         params: {
-          email: user.email,
+          email: user.uid,
           password: user.password
         },
         headers: headers
@@ -35,7 +35,7 @@ RSpec.describe 'POST /api/auth/sign_in', type: :request do
     before do
       post '/api/auth/sign_in',
         params: {
-          email: user.email,
+          email: user.uid,
           password: 'wrong_password'
         },
         headers: headers

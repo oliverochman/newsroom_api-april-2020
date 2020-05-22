@@ -45,7 +45,8 @@ get /articles/:id
 }
 ```
 
-post /articles
+post /articles **Requires authentication headers!**
+Headers need to include the standard { uid: "", client: "", access_token: "", expiry: "", token_type: "Bearer" }
 with :title and :body params, gives 200 response with body:
 
 ```
@@ -70,7 +71,7 @@ or
 ```
 
 ### **Login**
-
+All [devise_token_auth endpoints](https://devise-token-auth.gitbook.io/devise-token-auth/usage) are open, only sign in is tested for right now.
 post /auth/sign_in
 
 ```
@@ -81,8 +82,6 @@ post /auth/sign_in
    "provider":"email",
    "uid":"mystring@mail.com",
    "allow_password_change":false,
-   "name":"User Example",
-   "image":"imageURL"}
 }
 ```
 

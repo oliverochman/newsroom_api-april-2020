@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Api::ArticlesController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
+  
   def index
     article = Article.all
     render json: article, each_serializer: Article::IndexSerializer

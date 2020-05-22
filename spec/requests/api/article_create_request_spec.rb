@@ -1,9 +1,27 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Api::Articles :create', type: :request do
-  describe 'Journalist can successfully post an article' do
+  let(:user) { create(:user) }
+  let(:credentials) { user.create_new_auth_token }
+  let(:headers) { { HTTP_ACCEPT: 'application/json' }.merge!(credentials) }
+
+  describe 'not logged in user cannot create an article' do
     before do
       post '/api/articles', params: { title: 'A title', body: 'The body' }
+    end
+
+    it 'has a 401 response' do
+      expect(response).to have_http_status 401
+    end
+
+    it 'responds with error message' do
+      expect(response_json['errors']).to eq ["You need to sign in or sign up before continuing."]
+    end
+  end
+
+  describe 'Journalist can successfully post an article' do
+    before do
+      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
     end
 
     it 'has a 200 response' do
@@ -22,7 +40,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
   describe 'Journalist cannot post an article when' do
     describe 'title is missing' do
       before do
-        post '/api/articles', params: { body: 'The body' }
+        post '/api/articles', headers: headers, params: { body: 'The body' }
       end
 
       it 'has a 400 response' do
@@ -36,7 +54,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
     describe 'body is missing' do
       before do
-        post '/api/articles', params: { title: 'A title' }
+        post '/api/articles', headers: headers, params: { title: 'A title' }
       end
 
       it 'has a 400 response' do
