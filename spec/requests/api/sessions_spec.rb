@@ -9,7 +9,6 @@ RSpec.describe 'POST /api/auth/sign_in', type: :request do
         'id' => user.id, 'uid' => user.email, 'email' => user.email,
         'provider' => 'email', 'allow_password_change' => false, 'name' => user.name,
         'image' => user.image
-
       }
     }
   end
