@@ -19,8 +19,6 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[6.0]
       t.datetime :confirmation_sent_at
       t.string   :unconfirmed_email
 
-      t.string :name
-      t.string :image
       t.string :email
 
       t.json :tokens
