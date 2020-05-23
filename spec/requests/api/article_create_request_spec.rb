@@ -7,7 +7,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
   describe 'not logged in user cannot create an article' do
     before do
-      post '/api/articles', params: { title: 'A title', body: 'The body' }
+      post '/api/articles', params: { title: 'A title', body: 'The body', category: 'sport' }
     end
 
     it 'has a 401 response' do
@@ -15,13 +15,13 @@ RSpec.describe 'Api::Articles :create', type: :request do
     end
 
     it 'responds with error message' do
-      expect(response_json['errors']).to eq ["You need to sign in or sign up before continuing."]
+      expect(response_json['errors']).to eq ['You need to sign in or sign up before continuing.']
     end
   end
 
   describe 'Journalist can successfully post an article' do
     before do
-      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
+      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body', category: 'sport' }
     end
 
     it 'has a 200 response' do
@@ -40,7 +40,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
   describe 'Journalist cannot post an article when' do
     describe 'title is missing' do
       before do
-        post '/api/articles', headers: headers, params: { body: 'The body' }
+        post '/api/articles', headers: headers, params: { body: 'The body', category: 'sport' }
       end
 
       it 'has a 400 response' do
@@ -54,7 +54,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
     describe 'body is missing' do
       before do
-        post '/api/articles', headers: headers, params: { title: 'A title' }
+        post '/api/articles', headers: headers, params: { title: 'A title', category: 'sport' }
       end
 
       it 'has a 400 response' do
@@ -63,6 +63,20 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
       it 'has a descriptive error message' do
         expect(response_json['message']).to eq "Body can't be blank"
+      end
+    end
+
+    describe 'category is missing' do
+      before do
+        post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
+      end
+
+      it 'has a 400 response' do
+        expect(response).to have_http_status 400
+      end
+
+      it 'has a descriptive error message' do
+        expect(response_json['message']).to eq "Category can't be blank"
       end
     end
   end
