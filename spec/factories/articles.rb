@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :article do
     title { 'this is title' }
     body { 'this is body' }
-    category { 'Sport' }
+    category { 'sport' }
   end
 end
