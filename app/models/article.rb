@@ -2,5 +2,5 @@
 
 class Article < ApplicationRecord
   validates_presence_of :title, :body, :category
-  enum category: %i[sport politics economy world entertainment]
+  enum category: %i[current sport local politics economy world entertainment]
 end
