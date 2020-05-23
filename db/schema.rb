@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_05_23_095954) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "body"
-    t.integer "category"
+    t.integer "category", default: 0
   end
 
   create_table "users", force: :cascade do |t|

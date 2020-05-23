@@ -20,8 +20,13 @@ RSpec.describe 'Api::Articles :index', type: :request do
       it ':title' do
         expect(response_json['articles'][0]).to have_key 'title'
       end
+
       it ':category' do
         expect(response_json['articles'][0]).to have_key 'category'
+      end
+
+      it ':created_at' do
+        expect(response_json['articles'][0]['created_at']).to eq Date.today.strftime('%F')
       end
     end
   end

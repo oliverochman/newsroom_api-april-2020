@@ -37,6 +37,24 @@ RSpec.describe 'Api::Articles :create', type: :request do
     end
   end
 
+  describe 'creation without article sets default value and' do
+    before do
+      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
+    end
+
+    it 'has a 200 response' do
+      expect(response).to have_http_status 200
+    end
+
+    it 'responds with success message' do
+      expect(response_json['message']).to eq 'Article successfully created!'
+    end
+
+    it 'article has default category' do
+      expect(Article.last[:category]).to eq 'other'
+    end
+  end
+
   describe 'Journalist cannot post an article when' do
     describe 'title is missing' do
       before do
@@ -63,20 +81,6 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
       it 'has a descriptive error message' do
         expect(response_json['message']).to eq "Body can't be blank"
-      end
-    end
-
-    describe 'category is missing' do
-      before do
-        post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
-      end
-
-      it 'has a 400 response' do
-        expect(response).to have_http_status 400
-      end
-
-      it 'has a descriptive error message' do
-        expect(response_json['message']).to eq "Category can't be blank"
       end
     end
   end
