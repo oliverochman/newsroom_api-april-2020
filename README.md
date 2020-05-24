@@ -18,12 +18,12 @@ Response : {articles:[{id:1,title:"title1"},{id:2,title:"title2"}]}
         {"id":1,
         "title":"title1",
         "category":"category1",
-        "published_at":"YYYY-MM-dd"
+        "published_at":"YYYY-MM-dd hh:mm"
         },
         {"id":2,
         "title":"title2",
         "category":"category2",
-        "published_at":"YYYY-MM-dd"
+        "published_at":"YYYY-MM-dd hh:mm"
         }
     ]
 }
