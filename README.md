@@ -9,16 +9,21 @@ Prefix for all requests >>> **/api**
 #### index
 
 get /articles  
+created_at is based on db created_at, and may need to be changed to be published_at later
 Response : {articles:[{id:1,title:"title1"},{id:2,title:"title2"}]}
 
 ```
 {
     "articles":[
         {"id":1,
-        "title":"title1"
+        "title":"title1",
+        "category":"category1",
+        "published_at":"YYYY-MM-dd hh:mm"
         },
         {"id":2,
-        "title":"title2"
+        "title":"title2",
+        "category":"category2",
+        "published_at":"YYYY-MM-dd hh:mm"
         }
     ]
 }
@@ -47,7 +52,7 @@ get /articles/:id
 
 post /articles **Requires authentication headers!**
 Headers need to include the standard { uid: "", client: "", access_token: "", expiry: "", token_type: "Bearer" }
-with :title and :body params, gives 200 response with body:
+with :title, and :body params (:category is available to set, or will default to "other"), gives 200 response with body:
 
 ```
 {
@@ -56,7 +61,7 @@ with :title and :body params, gives 200 response with body:
 }
 ```
 
-with :title or :body params missing, gives 400 response with body:
+with :title,or :body params missing, gives 400 response with body:
 
 ```
 {
@@ -68,9 +73,16 @@ or
 {
   "message": "Body can't be blank"
 }
+
+or
+
+{
+  "message": "Category can't be blank"
+}
 ```
 
 ### **Login**
+
 All [devise_token_auth endpoints](https://devise-token-auth.gitbook.io/devise-token-auth/usage) are open, only sign in is tested for right now.
 post /auth/sign_in
 
