@@ -4,6 +4,42 @@ RSpec.describe 'Api::Articles :create', type: :request do
   let(:user) { create(:user) }
   let(:credentials) { user.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPT: 'application/json' }.merge!(credentials) }
+  let(:image) do
+    {
+      type: 'application/jpg',
+      encoder: 'name=iphone_picture.jpg:base64',
+      data: 'SDFHBUVSHEBF43778UBFKSBB28',
+      extension: 'jpg'
+    }
+  end
+
+  describe 'Journalist can successfully post an article' do
+    before do
+      post '/api/articles', headers: headers, params: { 
+        title: 'A title', 
+        body: 'The body', 
+        category: 'sport',
+        image: image
+      }
+    end
+
+    it 'has a 200 response' do
+      expect(response).to have_http_status 200
+    end
+
+    it 'responds with article :id' do
+      expect(response_json).to have_key 'id'
+    end
+
+    it 'has image attached' do
+      article = Article.last
+      expect(article.image.attached?).to eq true
+    end
+
+    it 'responds with success message' do
+      expect(response_json['message']).to eq 'Article successfully created!'
+    end
+  end
 
   describe 'not logged in user cannot create an article' do
     before do
@@ -19,27 +55,9 @@ RSpec.describe 'Api::Articles :create', type: :request do
     end
   end
 
-  describe 'Journalist can successfully post an article' do
-    before do
-      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body', category: 'sport' }
-    end
-
-    it 'has a 200 response' do
-      expect(response).to have_http_status 200
-    end
-
-    it 'responds with article :id' do
-      expect(response_json).to have_key 'id'
-    end
-
-    it 'responds with success message' do
-      expect(response_json['message']).to eq 'Article successfully created!'
-    end
-  end
-
   describe 'creation without article sets default value and' do
     before do
-      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
+      post '/api/articles', headers: headers, params: { image: image, title: 'A title', body: 'The body' }
     end
 
     it 'has a 200 response' do
