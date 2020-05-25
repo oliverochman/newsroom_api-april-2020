@@ -3,4 +3,6 @@
 class Article < ApplicationRecord
   validates_presence_of :title, :body, :category
   enum category: %i[other sport local politics economy world entertainment]
+
+  has_one_attached :image
 end
