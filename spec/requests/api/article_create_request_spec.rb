@@ -4,13 +4,12 @@ RSpec.describe 'Api::Articles :create', type: :request do
   let(:user) { create(:user) }
   let(:credentials) { user.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPT: 'application/json' }.merge!(credentials) }
-  let(:image) do 
+  let(:image) do
     { type: 'application/json',
-     encoder: 'name=iphone_picture.jpg:base64',
-     data: 'YmFzZTY0IGRlY29kZXI=',
-     extension: 'jpg'
-    }
-end
+      encoder: 'name=iphone_picture.jpg:base64',
+      data: 'YmFzZTY0IGRlY29kZXI=',
+      extension: 'jpg' }
+  end
 
   describe 'not logged in user cannot create an article' do
     before do
@@ -37,7 +36,7 @@ end
 
     it 'has a image attatched to article' do
       article = Article.last
-      expect(article.image.attatched?).to eq true
+      expect(article.image.attached?).to eq true
     end
 
     it 'responds with article :id' do
@@ -51,7 +50,7 @@ end
 
   describe 'creation without article sets default value and' do
     before do
-      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body' }
+      post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body', image: image }
     end
 
     it 'has a 200 response' do
