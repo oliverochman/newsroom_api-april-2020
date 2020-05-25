@@ -3,7 +3,7 @@
 RSpec.describe 'Api::Articles :show', type: :request do
   let!(:article) { create(:article) }
   let(:user) { create(:user) }
-  let(:credentials) { user.create_new_token_auth }
+  let(:credentials) { user.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPT: 'application/json' }.merge!(credentials) }
   let!(:premium_article) { create(:article, premium: true) }
   
@@ -48,14 +48,13 @@ RSpec.describe 'Api::Articles :show', type: :request do
     end
 
     it 'displays premium article with a length of 100 characters only' do
-      binding.pry
       expect(response_json['article']['body'].length).to eq 100
     end
   end
 
   describe 'User can see full premium article' do
     before do
-      get "/api/articles/#{premium_article.id}"
+      get "/api/articles/#{premium_article.id}", headers: headers
     end
 
     it 'displays premium article in full' do
