@@ -25,3 +25,7 @@ RSpec.configure do |config|
   config.include ResponseJSON
   config.filter_gems_from_backtrace('rack', 'railties', 'bootsnap')
 end
+
+FactoryBot::SyntaxRunner.class_eval do
+  include ActionDispatch::TestProcess
+end
