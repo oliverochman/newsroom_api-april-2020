@@ -6,7 +6,7 @@ RSpec.describe 'Api::Articles :show', type: :request do
   let(:credentials) { user.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPT: 'application/json' }.merge!(credentials) }
   let!(:premium_article) { create(:article, premium: true) }
-  
+
   describe 'GET /api/articles/:id' do
     before do
       article = Article.first
@@ -15,6 +15,11 @@ RSpec.describe 'Api::Articles :show', type: :request do
 
     it 'has a 200 response' do
       expect(response).to have_http_status 200
+    end
+
+    it 'is shown in full without auth' do
+      binding.pry
+      expect(response_json['article']['body'].length).to eq article[:body].length
     end
 
     describe 'response has keys' do
