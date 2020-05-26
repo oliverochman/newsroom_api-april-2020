@@ -2,7 +2,7 @@
 
 class Api::ArticlesController < ApplicationController
   before_action :authenticate_user!, only: [:create]
-  
+
   def index
     article = Article.all
     render json: article, each_serializer: Article::IndexSerializer
@@ -17,8 +17,10 @@ class Api::ArticlesController < ApplicationController
 
   def create
     article = Article.create(article_params)
-    if article.persisted?
+    if article.persisted? && attach_image(article)
       render json: { id: article.id, message: 'Article successfully created!' }
+    elsif !attach_image(article)
+      render json: { message: "Image can't be blank" }, status: 400
     else
       error = "#{article.errors.first[0].to_s.capitalize} #{article.errors.first[1]}"
       render json: { message: error }, status: 400
@@ -26,6 +28,13 @@ class Api::ArticlesController < ApplicationController
   end
 
   private
+
+  def attach_image(article)
+    params_image = params[:image]
+    if params_image.present?
+      DecodeService.attach_image(params_image, article.image)
+    end
+  end
 
   def article_params
     params.permit(:title, :body, :category)
