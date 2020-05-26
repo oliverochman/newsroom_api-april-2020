@@ -32,12 +32,15 @@ Response : {articles:[{id:1,title:"title1"},{id:2,title:"title2"}]}
 get /articles/:id
 :id exists in db gives a 200 response with body:
 
+:body is restricted to 100 characters without user credentials for articles where :premium is true
+
 ```
 {
   "article": {
     "id": 1,
     "title": "A title",
-    "body": "The body"
+    "body": "The body",
+    "premium": false
   }
 }
 ```

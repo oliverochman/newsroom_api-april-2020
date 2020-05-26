@@ -48,7 +48,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
     end
   end
 
-  describe 'creation without article sets default value and' do
+  describe 'creation without article category sets default value and' do
     before do
       post '/api/articles', headers: headers, params: { title: 'A title', body: 'The body', image: image }
     end
