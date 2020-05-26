@@ -18,7 +18,6 @@ RSpec.describe 'Api::Articles :show', type: :request do
     end
 
     it 'is shown in full without auth' do
-      binding.pry
       expect(response_json['article']['body'].length).to eq article[:body].length
     end
 
