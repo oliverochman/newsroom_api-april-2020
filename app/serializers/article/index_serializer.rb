@@ -1,7 +1,19 @@
 # frozen_string_literal: true
 
 class Article::IndexSerializer < ActiveModel::Serializer
-  attributes :id, :title, :category, :published_at
+  include Rails.application.routes.url_helpers
+
+  attributes :id, :title, :category, :published_at, :image
+
+  def image 
+    return nil unless object.image.attached?
+    
+    if Rails.env.test?
+      rails_blob_url(object.image)
+    else
+      object.image.service_url(expires_in: 1.hour, disposition: 'inline')
+    end
+  end
 
   def published_at
     object.created_at.strftime('%F %R')

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Api::Articles :index', type: :request do
-  let!(:article) { 3.times { create(:article) } }
+  let!(:article) { 3.times { create(:article, :with_image) } }
 
   describe 'GET /api/articles' do
     before do
@@ -27,6 +27,10 @@ RSpec.describe 'Api::Articles :index', type: :request do
 
       it ':created_at' do
         expect(response_json['articles'][0]).to have_key 'published_at'
+      end
+
+      it ':image' do
+        expect(response_json['articles'][0]).to have_key 'image'
       end
     end
   end
