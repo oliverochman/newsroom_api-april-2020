@@ -69,7 +69,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
   describe 'Journalist cannot post an article when' do
     describe 'title is missing' do
       before do
-        post '/api/articles', headers: headers, params: { body: 'The body', category: 'sport' }
+        post '/api/articles', headers: headers, params: { body: 'The body', category: 'sport', image: image }
       end
 
       it 'has a 400 response' do
@@ -83,7 +83,7 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
     describe 'body is missing' do
       before do
-        post '/api/articles', headers: headers, params: { title: 'A title', category: 'sport' }
+        post '/api/articles', headers: headers, params: { title: 'A title', category: 'sport', image: image }
       end
 
       it 'has a 400 response' do
@@ -92,6 +92,20 @@ RSpec.describe 'Api::Articles :create', type: :request do
 
       it 'has a descriptive error message' do
         expect(response_json['message']).to eq "Body can't be blank"
+      end
+    end
+
+    describe 'image is missing' do
+      before do
+        post '/api/articles', headers: headers, params: { body: 'The body', title: 'A title', category: 'sport' }
+      end
+
+      it 'has a 400 response' do
+        expect(response).to have_http_status 400
+      end
+
+      it 'has a descriptive error message' do
+        expect(response_json['message']).to eq "Image can't be blank"
       end
     end
   end

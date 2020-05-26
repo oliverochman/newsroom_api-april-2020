@@ -19,6 +19,8 @@ class Api::ArticlesController < ApplicationController
     article = Article.create(article_params)
     if article.persisted? && attach_image(article)
       render json: { id: article.id, message: 'Article successfully created!' }
+    elsif !attach_image(article)
+      render json: { message: "Image can't be blank" }, status: 400
     else
       error = "#{article.errors.first[0].to_s.capitalize} #{article.errors.first[1]}"
       render json: { message: error }, status: 400
