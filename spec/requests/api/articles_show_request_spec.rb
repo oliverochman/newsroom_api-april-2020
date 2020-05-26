@@ -17,7 +17,7 @@ RSpec.describe 'Api::Articles :show', type: :request do
       expect(response).to have_http_status 200
     end
 
-    it 'is shown in full without auth' do
+    it 'free article is shown in full without auth' do
       expect(response_json['article']['body'].length).to eq article[:body].length
     end
 
