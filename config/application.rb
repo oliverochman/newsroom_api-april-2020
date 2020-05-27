@@ -32,6 +32,9 @@ module NewsroomApiApril2020
       end
     end
 
+    config.stripe.publishable_key = Rails.application.credentials.stripe[:publishable_key]
+    config.stripe.secret_key = Rails.application.credentials.stripe[:secret_key]
+
     config.generators do |generate|
       generate.helper false
       generate.assets false
