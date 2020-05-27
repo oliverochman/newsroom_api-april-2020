@@ -19,6 +19,7 @@ class Api::SubscriptionsController < ApplicationController
         end
 
         status = Stripe::Invoice.retrieve(subscription.latest_invoice).paid
+        binding.pry
 
         if status
           current_user.subscriber = true

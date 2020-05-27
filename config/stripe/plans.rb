@@ -7,7 +7,7 @@
 
 Stripe.plan :platinum_plan do |plan|
   # plan name as it will appear on credit card statements
-  plan.name = 'Subscription Plan'
+  plan.name = 'platinum_plan'
 
   # amount in cents.
   plan.amount = 1000000
